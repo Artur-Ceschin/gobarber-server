@@ -1,37 +1,14 @@
-import { isEqual } from 'date-fns';
-import Appointment from '../models/Appointment';
+import { AppDataSource } from '../database/data-source'
+import Appointment from '../entities/Appointment'
 
-interface CreateAppointmentsDTO {
-  provider: string;
-  date: Date;
-}
+const AppointmentsRepository = AppDataSource.getRepository(Appointment).extend({
+  async findByDate(date: Date) {
+    const findAppointment = await this.findOne({
+      where: { date },
+    })
 
-class AppointmentsRepository {
-  private readonly appointments: Appointment[];
+    return findAppointment ?? null
+  },
+})
 
-  constructor() {
-    this.appointments = [];
-  }
-
-  public all(): Appointment[] {
-    return this.appointments;
-  }
-
-  public findByDate(date: Date): Appointment | null {
-    const findAppointment = this.appointments.find(appointment =>
-      isEqual(date, appointment.date),
-    );
-
-    return findAppointment ?? null;
-  }
-
-  public create({ date, provider }: CreateAppointmentsDTO): Appointment {
-    const appointment = new Appointment({ provider, date });
-
-    this.appointments.push(appointment);
-
-    return appointment;
-  }
-}
-
-export default AppointmentsRepository;
+export default AppointmentsRepository
