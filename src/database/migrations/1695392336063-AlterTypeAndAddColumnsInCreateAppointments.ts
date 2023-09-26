@@ -25,8 +25,9 @@ export class AlterTypeAndAddColumnsInCreateAppointments1695392336063
       }),
     )
 
-    await queryRunner.addColumn(
+    await queryRunner.changeColumn(
       'appointments',
+      'created_at',
       new TableColumn({
         name: 'created_at',
         type: 'timestamp',
@@ -34,8 +35,9 @@ export class AlterTypeAndAddColumnsInCreateAppointments1695392336063
       }),
     )
 
-    await queryRunner.addColumn(
+    await queryRunner.changeColumn(
       'appointments',
+      'updated_at',
       new TableColumn({
         name: 'updated_at',
         type: 'timestamp',
@@ -67,8 +69,24 @@ export class AlterTypeAndAddColumnsInCreateAppointments1695392336063
       }),
     )
 
-    await queryRunner.dropColumn('appointments', 'created_at')
+    await queryRunner.changeColumn(
+      'appointments',
+      'created_at',
+      new TableColumn({
+        name: 'created_at',
+        type: 'timestamp with time zone',
+        isNullable: false,
+      }),
+    )
 
-    await queryRunner.dropColumn('appointments', 'updated_at')
+    await queryRunner.changeColumn(
+      'appointments',
+      'updated_at',
+      new TableColumn({
+        name: 'updated_at',
+        type: 'timestamp with time zone',
+        isNullable: false,
+      }),
+    )
   }
 }
