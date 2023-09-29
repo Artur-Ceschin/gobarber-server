@@ -21,6 +21,9 @@ class User extends BaseEntity {
   @Column()
   password: string
 
+  @Column({ nullable: true })
+  avatar: string
+
   @CreateDateColumn()
   created_at: Date
 

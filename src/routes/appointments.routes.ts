@@ -11,7 +11,6 @@ const appointmentsRouter = Router()
 appointmentsRouter.use(ensureAuthenticated)
 
 appointmentsRouter.get('/', async (request, response) => {
-  console.log(request.user)
   const appointments = await AppointmentsRepository.find()
   return response.json(appointments)
 })
