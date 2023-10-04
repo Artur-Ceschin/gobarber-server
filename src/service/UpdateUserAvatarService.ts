@@ -4,6 +4,9 @@ import fs from 'fs'
 import { AppDataSource } from '../database/data-source'
 
 import uploadConfig from '../config/upload'
+
+import AppError from '../errors/AppError'
+
 import User from '../entities/User'
 
 interface Request {
@@ -18,7 +21,7 @@ class UpdateUserAvatarService {
     const user = await usersRepository.findOne({ where: { id: user_id } })
 
     if (!user) {
-      throw new Error('Only authenticated users can change avatar.')
+      throw new AppError('Only authenticated users can change avatar.')
     }
 
     if (user.avatar) {
